@@ -20,7 +20,7 @@ def mongo_client():
 def driver():
     # Set up Chrome options for headless mode
     options = Options()
-    options.add_argument("--headless")  # Run in headless mode
+    #options.add_argument("--headless")  # Run in headless mode
     options.add_argument("--disable-gpu")  # Disable GPU hardware acceleration
     options.add_argument("--window-size=1920x1080") 
     
