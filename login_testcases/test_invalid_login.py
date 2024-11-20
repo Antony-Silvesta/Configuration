@@ -25,7 +25,7 @@ def get_users_collection():
 def setup_driver():
     # Set up Chrome options for headless mode
     options = Options()
-    #options.add_argument("--headless")  # Run in headless mode
+    options.add_argument("--headless")  # Run in headless mode
     options.add_argument("--disable-gpu")  # Disable GPU acceleration (optional but recommended for headless)
     options.add_argument("--no-sandbox")  # Disable the sandbox (necessary for some CI environments)
 
