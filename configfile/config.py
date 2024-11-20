@@ -1,19 +1,54 @@
+import os
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
+def setup_mongodb():
+    # Retrieve MongoDB URI from environment variable
+    mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+    try:
+        # Connect to MongoDB
+        client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+        client.admin.command('ping')  # Ping to check connection
+        print("MongoDB connected successfully!")
+    except ConnectionFailure as e:
+        print(f"Failed to connect to MongoDB: {e}")
+        exit(1)
+    # Set up test data (example)
+    db = client.get_database('sampleupload')  # Use a database for testing
+    collection = db.get_collection('users')
+    # Example: Insert some test documents
+    sample_data = [
+        {
+            "username": "demo",
+            "password": "demo",
+            "is_valid": True,
+            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/"
+        },
 
-MONGO_URI = "mongodb://127.0.0.1:27017/"
-DATABASE_NAME = "sampleupload"  # Use your actual database name
-USER_COLLECTION = "users"  # Corrected variable name
-
-
-def get_db():
-    """Connect to MongoDB and return the database instance."""
-    client = MongoClient(MONGO_URI)
-    db = client[DATABASE_NAME]
-    return db  # Return only the database instance
-
-def get_users_collection():
-    """Get the users collection from the database."""
-    db = get_db()  # Get the database
-    user_collection = db[USER_COLLECTION]  # Use a single bracket for collection
-    return user_collection  # Return only the collection
-
+        {
+          
+            "username": "",
+            "first_name": "admin",
+            "last_name": "admin",
+            "password": "demo",
+            "mode_2fa": "Off",
+            "groups": [
+            "Admin"
+            ],
+            "rights": "Admin",
+            "notes": {
+            "info": "this 'notes' field exists only for this default admin user",
+            "p": "donttrustyou"
+            },
+            "vec_2fa": None,
+            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
+            "is_valid": False,
+            "expected_error": "Wrong credentials",
+            "createdAt": "2024-10-28T11:12:24.055Z"
+        },
+        
+       
+    ]
+    collection.insert_many(sample_data)
+    print(f"Test data inserted into {db.name}.{collection.name}")
+if __name__ == "__main__":
+    setup_mongodb()
