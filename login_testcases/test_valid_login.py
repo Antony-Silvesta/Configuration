@@ -4,6 +4,8 @@ import pytest
 from homeobjects.test_login import LoginPage
 from configfile.config import MongoClient  # Assuming MongoClient is defined in config
 import time
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 # Fixture for MongoDB client connection
 @pytest.fixture(scope="module")

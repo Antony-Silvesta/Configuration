@@ -5,6 +5,15 @@ from homeobjects.test_login import LoginPage
 from configfile.config import MongoClient
 import logging
 
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+options = webdriver.ChromeOptions()
+
+# Specify path explicitly
+service = Service("C:/Users/shinba/Configuration/chromedriver-win64/chromedriver.exe")
+driver = webdriver.Chrome(service=service, options=options)
+
 # Set up logger
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
