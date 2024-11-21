@@ -20,79 +20,73 @@ def setup_mongodb():
     collection = db.get_collection(USER_COLLECTION)  # Use your collection
   # Example: Insert some test documents
     sample_data = [
-        {
-            "username": "testuser1",
-            "password": "password123",
-            "email": "user1@test.com",
-            "is_valid": True,
-            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/"
-        },
-        
-        {
-            "_id": "671f70b2f11c1401cbf07edd",
-            "username": "demo",
+       {
+            "username": "",
             "first_name": "admin",
             "last_name": "admin",
             "password": "demo",
             "mode_2fa": "Off",
-            "groups": [
-            "Admin"
-            ],
+            "groups": ["Admin"],
             "rights": "Admin",
-            "notes": {
-            "info": "this 'notes' field exists only for this default admin user",
-            "p": "donttrustyou"
-            },
-            "vec_2fa": None,
+            "notes": {"info": "this 'notes' field exists only for this default admin user", "p": "donttrustyou"},
+            "vec_2fa": None,  # Corrected null to None
             "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
             "is_valid": True,
             "expected_error": "success",
-            "createdAt": "2024-10-28T11:08:34.507Z"
         },
-
         {
-            "_id": "671f71988a76e1c09ab851f2",
+            "username": "",
+            "first_name": "admin",
+            "last_name": "admin",
+            "password": "demo",
+            "mode_2fa": "Off",
+            "groups": ["Admin"],
+            "rights": "Admin",
+            "notes": {"info": "this 'notes' field exists only for this default admin user", "p": "donttrustyou"},
+            "vec_2fa": None,  # Corrected null to None
+            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
+            "is_valid": False,
+            "expected_error": "Wrong credentials",
+        },
+        {
+            "username": "demo",
+            "first_name": "admin",
+            "last_name": "admin",
+            "password": "",
+            "mode_2fa": "Off",
+            "groups": ["Admin"],
+            "rights": "Admin",
+            "notes": {"info": "this 'notes' field exists only for this default admin user", "p": "donttrustyou"},
+            "vec_2fa": None,  # Corrected null to None
+            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
+            "is_valid": False,
+            "expected_error": "Wrong credentials",
+        },
+        {
             "username": "demo",
             "first_name": "admin",
             "last_name": "admin",
             "password": "demo",
             "mode_2fa": "Off",
-            "groups": [
-            "Admin"
-            ],
+            "groups": ["Admin"],
             "rights": "Admin",
             "notes": {
-            "info": "this 'notes' field exists only for this default admin user",
-            "p": "donttrustyou"
+                "info": "this 'notes' field exists only for this default admin user",
+                "p": "donttrustyou"
             },
-            "vec_2fa": None,
+            "vec_2fa": None,  # Corrected null to None
             "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
-            "is_valid": False,
-            "expected_error": "Wrong credentials",
-            "createdAt": "2024-10-28T11:12:24.055Z"
-        },
-
-        {
-            "_id": "671f72dc4f69035a3f179550",
-            "username": "@##$$$",
-            "first_name": "admin",
-            "last_name": "admin",
-            "password": "demo",
-            "mode_2fa": "Off",
-            "groups": [
-            "Admin"
-            ],
-            "rights": "Admin",
-            "notes": {
-            "info": "this 'notes' field exists only for this default admin user",
-            "p": "donttrustyou"
-            },
-            "vec_2fa": None,
-            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
-            "is_valid": False,
-            "expected_error": "Wrong credentials",
-            "createdAt": "2024-10-28T11:17:48.776Z"
+            "is_valid": True,
+            "expected_error": "success",
         }
+
+
+
+
+
+
+
+
 
 
     ]
