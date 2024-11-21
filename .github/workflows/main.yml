@@ -1,4 +1,4 @@
-name: Selenium Tests
+name: Selenium Tests 
 
 on:
   push:
@@ -86,3 +86,21 @@ jobs:
       with:
         name: selenium-test-report
         path: report.html
+
+    - name: Archive Pytest Results (with check)
+      run: |
+        if [ -f "pytest_test_results.log" ]; then
+          echo "Pytest results archived"
+        else
+          echo "Failed to archive Pytest results"
+          exit 1
+        fi
+
+    - name: Archive HTML Test Report (with check)
+      run: |
+        if [ -f "report.html" ]; then
+          echo "HTML test report archived"
+        else
+          echo "Failed to archive HTML test report"
+          exit 1
+        fi

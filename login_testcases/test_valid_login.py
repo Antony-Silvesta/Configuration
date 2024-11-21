@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import pytest
 from homeobjects.test_login import LoginPage
-from configfile.config import MongoClient  # Assuming MongoClient is defined in config
+from configfile.config import MongoClient  # Assuming MongoClient is defined in test_mongodb.py
 import time
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
