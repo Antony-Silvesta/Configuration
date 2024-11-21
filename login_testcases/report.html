@@ -439,9 +439,9 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>report.html</h1>
-    <p>Report generated on 21-Nov-2024 at 16:11:52 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
+    <p>Report generated on 21-Nov-2024 at 16:25:29 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
     <h2>Summary</h2>
-    <p>2 tests ran in 34.08 seconds. </p>
+    <p>2 tests ran in 29.76 seconds. </p>
     <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">2 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>, <input checked="true" class="filter" data-test-result="rerun" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="rerun">0 rerun</span>
     <h2>Results</h2>
     <table id="results-table">
@@ -457,23 +457,22 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">test_invalid_login.py::TestInvalidLogin::test_login_with_invalid_users</td>
-          <td class="col-duration">7.99</td>
+          <td class="col-duration">9.11</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>ERROR    login_testcases.test_invalid_login:test_invalid_login.py:74 Empty username or password found for user details: {&#x27;_id&#x27;: ObjectId(&#x27;673f0e41f1d4904d5de2ad3c&#x27;), &#x27;username&#x27;: &#x27;&#x27;, &#x27;first_name&#x27;: &#x27;admin&#x27;, &#x27;last_name&#x27;: &#x27;admin&#x27;, &#x27;password&#x27;: &#x27;demo&#x27;, &#x27;mode_2fa&#x27;: &#x27;Off&#x27;, &#x27;groups&#x27;: [&#x27;Admin&#x27;], &#x27;rights&#x27;: &#x27;Admin&#x27;, &#x27;notes&#x27;: {&#x27;info&#x27;: &quot;this &#x27;notes&#x27; field exists only for this default admin user&quot;, &#x27;p&#x27;: &#x27;donttrustyou&#x27;}, &#x27;vec_2fa&#x27;: None, &#x27;baseurl&#x27;: &#x27;https://demo.filebrowser.org/login?redirect=/files/&#x27;, &#x27;is_valid&#x27;: False, &#x27;expected_error&#x27;: &#x27;Wrong credentials&#x27;}
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>ERROR    login_testcases.test_invalid_login:test_invalid_login.py:74 Empty username or password found for user details: {&#x27;_id&#x27;: ObjectId(&#x27;673f0e41f1d4904d5de2ad3b&#x27;), &#x27;username&#x27;: &#x27;&#x27;, &#x27;first_name&#x27;: &#x27;admin&#x27;, &#x27;last_name&#x27;: &#x27;admin&#x27;, &#x27;password&#x27;: &#x27;demo&#x27;, &#x27;mode_2fa&#x27;: &#x27;Off&#x27;, &#x27;groups&#x27;: [&#x27;Admin&#x27;], &#x27;rights&#x27;: &#x27;Admin&#x27;, &#x27;notes&#x27;: {&#x27;info&#x27;: &quot;this &#x27;notes&#x27; field exists only for this default admin user&quot;, &#x27;p&#x27;: &#x27;donttrustyou&#x27;}, &#x27;vec_2fa&#x27;: None, &#x27;baseurl&#x27;: &#x27;https://demo.filebrowser.org/login?redirect=/files/&#x27;, &#x27;is_valid&#x27;: False, &#x27;expected_error&#x27;: &#x27;success&#x27;}
+ERROR    login_testcases.test_invalid_login:test_invalid_login.py:74 Empty username or password found for user details: {&#x27;_id&#x27;: ObjectId(&#x27;673f0e41f1d4904d5de2ad3c&#x27;), &#x27;username&#x27;: &#x27;&#x27;, &#x27;first_name&#x27;: &#x27;admin&#x27;, &#x27;last_name&#x27;: &#x27;admin&#x27;, &#x27;password&#x27;: &#x27;demo&#x27;, &#x27;mode_2fa&#x27;: &#x27;Off&#x27;, &#x27;groups&#x27;: [&#x27;Admin&#x27;], &#x27;rights&#x27;: &#x27;Admin&#x27;, &#x27;notes&#x27;: {&#x27;info&#x27;: &quot;this &#x27;notes&#x27; field exists only for this default admin user&quot;, &#x27;p&#x27;: &#x27;donttrustyou&#x27;}, &#x27;vec_2fa&#x27;: None, &#x27;baseurl&#x27;: &#x27;https://demo.filebrowser.org/login?redirect=/files/&#x27;, &#x27;is_valid&#x27;: False, &#x27;expected_error&#x27;: &#x27;Wrong credentials&#x27;}
 ERROR    login_testcases.test_invalid_login:test_invalid_login.py:74 Empty username or password found for user details: {&#x27;_id&#x27;: ObjectId(&#x27;673f0e41f1d4904d5de2ad3d&#x27;), &#x27;username&#x27;: &#x27;demo&#x27;, &#x27;first_name&#x27;: &#x27;admin&#x27;, &#x27;last_name&#x27;: &#x27;admin&#x27;, &#x27;password&#x27;: &#x27;&#x27;, &#x27;mode_2fa&#x27;: &#x27;Off&#x27;, &#x27;groups&#x27;: [&#x27;Admin&#x27;], &#x27;rights&#x27;: &#x27;Admin&#x27;, &#x27;notes&#x27;: {&#x27;info&#x27;: &quot;this &#x27;notes&#x27; field exists only for this default admin user&quot;, &#x27;p&#x27;: &#x27;donttrustyou&#x27;}, &#x27;vec_2fa&#x27;: None, &#x27;baseurl&#x27;: &#x27;https://demo.filebrowser.org/login?redirect=/files/&#x27;, &#x27;is_valid&#x27;: False, &#x27;expected_error&#x27;: &#x27;Wrong credentials&#x27;}<br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">test_valid_login.py::test_login_with_valid_users</td>
-          <td class="col-duration">17.33</td>
+          <td class="col-duration">11.82</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>Testing login for Username: &#x27;&#x27; with Password: &#x27;demo&#x27;
-Navigated to: https://demo.filebrowser.org/login?redirect=/files/
-Testing login for Username: &#x27;demo&#x27; with Password: &#x27;demo&#x27;
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>Testing login for Username: &#x27;demo&#x27; with Password: &#x27;demo&#x27;
 Navigated to: https://demo.filebrowser.org/login?redirect=/files/
 <br/> ----------------------------Captured stdout teardown---------------------------- <br/>MongoDB client connection closed.
 Browser closed.

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def setup_driver():
     # Set up Chrome options for headless mode
     options = Options()
-    options.add_argument("--headless")  # Enable headless mode
+    # options.add_argument("--headless")  # Enable headless mode
     options.add_argument("--disable-gpu")  # Disable GPU acceleration
     options.add_argument("--window-size=1920x1080")  # Optional: Set window size
     
