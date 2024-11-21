@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def setup_driver():
     # Set up Chrome options for headless mode
     options = Options()
-    # options.add_argument("--headless")  # Enable headless mode
+    options.add_argument("--headless")  # Enable headless mode
     options.add_argument("--disable-gpu")  # Disable GPU acceleration
     options.add_argument("--window-size=1920x1080")  # Optional: Set window size
     
@@ -69,10 +69,7 @@ class TestInvalidLogin:
 
             logger.info(f"Testing login for Username: '{username}' with Password: '{password}', Expected error: '{expected_error}'")
 
-            # Handle empty username or password case
-            if not username or not password:
-                logger.error(f"Empty username or password found for user details: {user_details}")
-                expected_error = "Wrong credentials"  # Adjust expected error as needed
+           
 
             # Navigate to the base URL
             try:

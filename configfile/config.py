@@ -30,7 +30,7 @@ def setup_mongodb():
             "rights": "Admin",
             "notes": {"info": "this 'notes' field exists only for this default admin user", "p": "donttrustyou"},
             "vec_2fa": None,  # Corrected null to None
-            "baseurl": "",
+            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
             "is_valid": False,
             "expected_error": "success",
         },
