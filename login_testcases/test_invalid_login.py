@@ -1,81 +1,57 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from homeobjects.test_login import LoginPage
 from configfile.config import MongoClient
 import logging
-
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-
-options = webdriver.ChromeOptions()
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=options)
-
-
-
-
-options = webdriver.ChromeOptions()
-
-# Specify path explicitly
-service = Service("C:/Users/shinba/Configuration/chromedriver-win64/chromedriver.exe")
-driver = webdriver.Chrome(service=service, options=options)
 
 # Set up logger
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# MongoDB setup functions
-def get_db():
-    """Set up MongoDB connection."""
-    client = MongoClient("mongodb://localhost:27017/")  # Replace with your MongoDB URI
-    return client["sampleupload"]
-
-def get_users_collection():
-    """Get the user collection."""
-    db = get_db()
-    return db["users"]  # Replace with the actual collection name
-
+# Fixture for Selenium WebDriver setup
 @pytest.fixture(scope="class")
 def setup_driver():
     # Set up Chrome options for headless mode
     options = Options()
-    options.add_argument("--headless")  # Run in headless mode
-    options.add_argument("--disable-gpu")  # Disable GPU acceleration (optional but recommended for headless)
-    options.add_argument("--no-sandbox")  # Disable the sandbox (necessary for some CI environments)
-
-    # Initialize the WebDriver with the headless options
-    driver = webdriver.Chrome(options=options)
+    options.add_argument("--headless")  # Enable headless mode
+    options.add_argument("--disable-gpu")  # Disable GPU acceleration
+    options.add_argument("--window-size=1920x1080")  # Optional: Set window size
+    
+    # Set up the service for ChromeDriver
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
     driver.implicitly_wait(5)
     yield driver
     driver.quit()
     logger.info("Browser closed.")
 
+# Fixture for fetching invalid users from MongoDB
 @pytest.fixture(scope="class")
 def invalid_users():
-    """Fixture to fetch invalid users from the database."""
-    db = get_db()
-    cls_user_collection = get_users_collection()
-
-    logger.info(f"Database connected: {db}")
-    logger.info(f"Connected to user collection: {cls_user_collection}")
+    client = MongoClient("mongodb://127.0.0.1:27017/")  # Update this URI as necessary
+    db = client["sampleupload"]  # Use your actual database name
+    users_collection = db["users"]  # Use your actual collection name
+    logger.info("Connected to MongoDB and fetched users collection.")
 
     # Fetch users with invalid details
-    invalid_user_details = list(cls_user_collection.find({"is_valid": False}))
+    invalid_user_details = list(users_collection.find({"is_valid": False}))
     logger.info(f"Invalid user details fetched: {invalid_user_details}")
 
     if not invalid_user_details:
         raise Exception("No invalid user details found in the database!")
 
-    return invalid_user_details  # Return the invalid users to be used in the test
+    yield invalid_user_details
+    client.close()
+    logger.info("MongoDB client connection closed.")
 
 @pytest.mark.usefixtures("setup_driver")
-class TestValidLogin:
+class TestInvalidLogin:
     def test_login_with_invalid_users(self, setup_driver, invalid_users):
-        # Debugging: Check if invalid_users is being passed correctly
-        logger.info(f"Invalid users fetched: {invalid_users}")
+        logger.info(f"Invalid users fetched for testing: {invalid_users}")
         
-        # Iterate over invalid users and perform login
         for index, user_details in enumerate(invalid_users):
             logger.debug(f"Index: {index}, User details: {user_details}")
 
@@ -91,7 +67,7 @@ class TestValidLogin:
             base_url = user_details["baseurl"]
             expected_error = user_details["expected_error"]
 
-            logger.info(f"Testing login for Username: '{username}' with Password: '{password}', expected error: '{expected_error}'")
+            logger.info(f"Testing login for Username: '{username}' with Password: '{password}', Expected error: '{expected_error}'")
 
             # Handle empty username or password case
             if not username or not password:
@@ -108,13 +84,13 @@ class TestValidLogin:
 
             # Instantiate the LoginPage object and attempt login
             lg = LoginPage(setup_driver)
-            lg.setUsername(username)  # Enter the username
-            lg.setPassword(password)  # Enter the corresponding password
+            lg.setUsername(username)
+            lg.setPassword(password)
             lg.clickLogin()
-            actualerror = lg.actualError()
+            actual_error = lg.actualError()
 
             # Assert that the actual error matches the expected error
-            assert expected_error == actualerror, (
-                f"Failed for Username: '{username}' with Password: '{password}'. "
-                f"Expected error: '{expected_error}', but got: '{actualerror}'"
+            assert expected_error == actual_error, (
+                f"Failed for Username: '{username}' with Password: '{password}', "
+                f"Expected: {expected_error}, Got: {actual_error}"
             )

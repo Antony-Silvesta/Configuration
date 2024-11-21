@@ -1,11 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import pytest
-from homeobjects.test_login import LoginPage
-from configfile.config import MongoClient  # Assuming MongoClient is defined in test_mongodb.py
-import time
+from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+import time
+from homeobjects.test_login import LoginPage
+from configfile.config import MongoClient  # Assuming MongoClient is defined in config
 
 # Fixture for MongoDB client connection
 @pytest.fixture(scope="module")
@@ -17,16 +17,20 @@ def mongo_client():
     client.close()  # Close the MongoDB client connection
     print("MongoDB client connection closed.")
 
-# Fixture for Selenium WebDriver with headless mode
+# Fixture for Selenium WebDriver
 @pytest.fixture(scope="module")
 def driver():
     # Set up Chrome options for headless mode
     options = Options()
-    options.add_argument("--headless")  # Run in headless mode
-    options.add_argument("--disable-gpu")  # Disable GPU hardware acceleration
-    options.add_argument("--window-size=1920x1080") 
+    options.add_argument("--headless")  # Enable headless mode
+    options.add_argument("--disable-gpu")  # Disable GPU acceleration
+    options.add_argument("--window-size=1920x1080")  # Optional: Set window size
     
-    driver = webdriver.Chrome(options=options)
+    # Set up the service for ChromeDriver
+    service = Service(ChromeDriverManager().install())
+    
+    # Initialize the Chrome WebDriver with the headless options
+    driver = webdriver.Chrome(service=service, options=options)
     driver.implicitly_wait(5)
     yield driver
     driver.quit()
