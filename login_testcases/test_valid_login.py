@@ -67,6 +67,6 @@ def test_login_with_valid_users(driver, mongo_client):
         # Instantiate the LoginPage object and perform login
         lg = LoginPage(driver)
         lg.setUsername(username)  # Enter the username
-        lg.setPassword(password)  # Enter the corresponding password
+        lg.setPassword(password)  # Enter the password
         lg.clickLogin()
         time.sleep(5)
