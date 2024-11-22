@@ -14,7 +14,7 @@ def send_email(subject, body):
     try:
         with smtplib.SMTP('smtp.gmail.com', 587) as server:
             server.starttls()  # Secure the connection
-            server.login(sender_email, sender_password)  # Log in using the app password
+            server.login(sender_email, sender_password)  # Log in using app password
             server.sendmail(sender_email, recipient_email, msg.as_string())  # Send the email
         print("Email sent successfully!")
     except Exception as e:
