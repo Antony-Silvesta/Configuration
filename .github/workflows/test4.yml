@@ -23,20 +23,24 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Set PYTHONPATH
-      run: |
-        echo "PYTHONPATH=$PYTHONPATH:$GITHUB_WORKSPACE/LoginTest/scripts" >> $GITHUB_ENV
+
     - name: Set Environment Variables
       run: |
-        echo "PYTHONPATH=$PWD/login_test/homeobjects:$PWD/LoginTest/scripts/setup_mongodb.py" >> $GITHUB_ENV
-        echo "MONGO_URI=mongodb://127.0.0.1:27017/test_db" >> $GITHUB_ENV
+          echo "PYTHONPATH=$PWD/login_testcases/homeobjects:$PWD/Configuration/configfile/config.py" >> $GITHUB_ENV
+          echo "MONGO_URI=mongodb://127.0.0.1:27017/sampleupload" >> $GITHUB_ENV
+  
     - name: Wait for MongoDB to be ready
       run: |
-        until nc -zv localhost 27017; do
-          echo "Waiting for MongoDB to start..."
-          sleep 1
-        done
-        echo "MongoDB is ready"
+          until nc -zv localhost 27017; do
+            echo "Waiting for MongoDB to start..."
+            sleep 1
+          done
+          echo "MongoDB is ready"
+  
+    - name: Configure MongoDB Test Data
+      run: |
+          python configfile/config.py    
+    
     - name: Make run_tests.sh executable
       run: chmod +x ./test.sh
     # Run the shell script to invoke the Selenium scripts using bash (instead of PowerShell)
