@@ -103,11 +103,14 @@ jobs:
     - name: Send Email Notification
       run: |
         if [ "${{ env.TESTS_PASSED }}" == "true" ]; then
-          python send_email_notification.py pass
+          python send_email_notification.py --status success
         else
-          python send_email_notification.py fail
+          python send_email_notification.py --status failure
         fi
       env:
-        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}  # Sender email stored in GitHub secrets
-        SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}  # Sender password stored in GitHub secrets
+        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+        SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
         RECIPIENT_EMAIL: antony.silvesta@nidrive.in
+
+
+    
