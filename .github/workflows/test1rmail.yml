@@ -1,4 +1,4 @@
-name: Selenium Tests
+name: Selenium Tests 
 
 on:
   push:
@@ -62,11 +62,10 @@ jobs:
     - name: Run Selenium tests and generate HTML report
       id: run_tests
       run: |
-        pytest --html=report.html --self-contained-html > pytest_test_results.log || true
+        pytest --html=report.html --self-contained-html > pytest_test_results.log || exit 0
         cat pytest_test_results.log
 
     - name: Check if tests passed or failed
-      id: check_tests
       run: |
         if grep -q "FAILED" pytest_test_results.log; then
           echo "Tests failed"
@@ -88,34 +87,31 @@ jobs:
         name: selenium-test-report
         path: report.html
 
-    - name: Validate Artifacts
+    - name: Archive Pytest Results (with check)
       run: |
-        if [ ! -f "pytest_test_results.log" ]; then
+        if [ -f "pytest_test_results.log" ]; then
+          echo "Pytest results archived"
+        else
           echo "Failed to archive Pytest results"
           exit 1
         fi
-        if [ ! -f "report.html" ]; then
+
+    - name: Archive HTML Test Report (with check)
+      run: |
+        if [ -f "report.html" ]; then
+          echo "HTML test report archived"
+        else
           echo "Failed to archive HTML test report"
           exit 1
         fi
-        echo "Artifacts validated successfully"
 
-    - name: Send Failure Email Notification
-      if: failure()
-      env:
-        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
-        SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
-        RECIPIENT_EMAIL: antony.silvesta@nidrive.in
+    - name: Send Email Notification
+      if: ${{ steps.test_run.outcome == 'success' || steps.test_run.outcome == 'failure' }} # Check if the test step succeeded or failed
       run: |
-        echo "Tests failed! Sending failure email notification..."
-        python send_email_notification.py "Tests failed on release push"
-
-    - name: Send Success Email Notification
-      if: success()
+          python send_email_notification.py success
+          python send_email_notification.py failure
       env:
-        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
-        SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
-        RECIPIENT_EMAIL: antony.silvesta@nidrive.in
-      run: |
-        echo "Tests passed! Sending success email notification..."
-        python send_email_notification.py "Tests passed on release push"
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}       # Securely access sender email
+          SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }} # Securely access sender password
+          RECIPIENT_EMAIL: antony.silvesta@nidrive.in     # Recipient email address
+      
