@@ -1,4 +1,4 @@
-name: Selenium Tests 
+name: Selenium Tests
 
 on:
   push:
@@ -62,10 +62,11 @@ jobs:
     - name: Run Selenium tests and generate HTML report
       id: run_tests
       run: |
-        pytest --html=report.html --self-contained-html > pytest_test_results.log || exit 0
+        pytest --html=report.html --self-contained-html > pytest_test_results.log || true
         cat pytest_test_results.log
 
     - name: Check if tests passed or failed
+      id: check_tests
       run: |
         if grep -q "FAILED" pytest_test_results.log; then
           echo "Tests failed"
@@ -87,35 +88,26 @@ jobs:
         name: selenium-test-report
         path: report.html
 
-    - name: Archive Pytest Results (with check)
+    - name: Validate Artifacts
       run: |
-        if [ -f "pytest_test_results.log" ]; then
-          echo "Pytest results archived"
-        else
+        if [ ! -f "pytest_test_results.log" ]; then
           echo "Failed to archive Pytest results"
           exit 1
         fi
-
-    - name: Archive HTML Test Report (with check)
-      run: |
-        if [ -f "report.html" ]; then
-          echo "HTML test report archived"
-        else
+        if [ ! -f "report.html" ]; then
           echo "Failed to archive HTML test report"
           exit 1
         fi
+        echo "Artifacts validated successfully"
 
     - name: Send Email Notification
       run: |
-          if [ "${{ steps.test_run.outcome }}" == "failure" ]; then
-            python send_email_notification.py failure
-          else
-            python send_email_notification.py success
-          fi
-      
-
- 
+        if [ "${{ env.TESTS_PASSED }}" == "true" ]; then
+          python send_email_notification.py pass
+        else
+          python send_email_notification.py fail
+        fi
       env:
-          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}  # Store sender email in GitHub secrets
-          SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}  # Store sender password in GitHub secrets
-          RECIPIENT_EMAIL: antony.silvesta@nidrive.in  # Store recipient email in GitHub secrets
+        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}  # Sender email stored in GitHub secrets
+        SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}  # Sender password stored in GitHub secrets
+        RECIPIENT_EMAIL: antony.silvesta@nidrive.in
