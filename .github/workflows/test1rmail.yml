@@ -100,17 +100,22 @@ jobs:
         fi
         echo "Artifacts validated successfully"
 
-    - name: Send Email Notification
-      run: |
-        if [ "${{ env.TESTS_PASSED }}" == "true" ]; then
-          python send_email_notification.py --status success
-        else
-          python send_email_notification.py --status failure
-        fi
+    - name: Send Failure Email Notification
+      if: failure()
       env:
         SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
         SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
         RECIPIENT_EMAIL: antony.silvesta@nidrive.in
+      run: |
+        echo "Tests failed! Sending failure email notification..."
+        python send_email_notification.py "Tests failed on release push"
 
-
-    
+    - name: Send Success Email Notification
+      if: success()
+      env:
+        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+        SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
+        RECIPIENT_EMAIL: antony.silvesta@nidrive.in
+      run: |
+        echo "Tests passed! Sending success email notification..."
+        python send_email_notification.py "Tests passed on release push"
