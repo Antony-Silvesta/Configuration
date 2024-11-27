@@ -10,7 +10,7 @@ if len(sys.argv) < 2:
 
 outcome = sys.argv[1]
 
-# Email configuration from environment variables
+# Email configuration from environment 
 sender_email = os.getenv('antonysilvesta74@gmail.com')
 sender_password = os.getenv('tyoy vegp ukgm pewe')
 recipient_email = os.getenv('antony.silvesta@nidrive.in')
