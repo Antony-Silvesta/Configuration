@@ -107,13 +107,9 @@ jobs:
 
     - name: Send Email Notification
       run: |
-          if [ "${{ steps.test_run.outcome }}" == "success" ]; then
-            pytest -v test_valid_login.py success
-          else
-            pytest -v test_invalid_login.py failure
-          fi
+          python send_email_notification.py ${{ steps.test_run.outcome }}
       env:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}  # Store sender email in GitHub secrets
           SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}  # Store sender password in GitHub secrets
-          RECIPIENT_EMAIL: antony.silvesta@nidrive.in  # Store recipient email in GitHub secrets
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}  # Store recipient email in GitHub secrets
       
